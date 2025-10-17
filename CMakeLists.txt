@@ -83,6 +83,12 @@ target_link_libraries(rhythm PRIVATE
 	${LUA_LIBRARIES}
 )
 
+install(TARGETS rhythm
+	RUNTIME DESTINATION bin
+	LIBRARY DESTINATION lib
+	ARCHIVE DESTINATION lib/static
+)
+
 # if ((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME OR MODERN_CMAKE_BUILD_TESTING) AND BUILD_TESTING)
 # 	add_subdirectory(tests)
 # endif()

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <lua.h>
+#include <lua.hpp>
 #include "scheduler.hpp"
 
 void lua_pop_extra_args(lua_State* L, int expected);
