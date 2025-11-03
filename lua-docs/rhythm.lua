@@ -21,8 +21,9 @@ function rhythm.schedule_after(delayMs, fn) end
 --- Schedule a recurring task at the given itnerval.
 --- @param intervalMs integer Interval in milliseconds between task executions.
 --- @param fn TaskFn The task function to execute.
+--- @param runImmediately? boolean If true, the task will run immediately upon scheduling.
 --- @return TaskId taskId The ID of the scheduled task.
-function rhythm.schedule_every(intervalMs, fn) end
+function rhythm.schedule_every(intervalMs, fn, runImmediately) end)
 
 --- Cancel a scheduled task.
 --- @param taskId TaskId

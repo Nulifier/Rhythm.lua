@@ -44,12 +44,15 @@ class Scheduler {
 	 * @param interval The interval at which to run the task.
 	 * @param func The task function to execute.
 	 * @param cleanup Optional cleanup function called after each task run.
+	 * @param runImmediately If true, the task will run immediately upon
+	 * scheduling.
 	 * @param skipIfLate If true, skip missed runs if late.
 	 * @return The ID of the scheduled task.
 	 */
 	TaskId scheduleEvery(const DurationMs& interval,
 						 const TaskFn& func,
 						 const TaskFn cleanup = TaskFn(),
+						 bool runImmediately = false,
 						 bool skipIfLate = false);
 
 	/**

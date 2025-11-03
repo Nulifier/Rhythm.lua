@@ -227,9 +227,9 @@ int lua_schedule_after(lua_State* L) {
 }
 
 int lua_schedule_every(lua_State* L) {
-	lua_pop_extra_args(L, 2);
+	STACK_START(lua_schedule_every, lua_gettop(L));
 
-	STACK_START(lua_schedule_every, 2);
+	// STACK: function, intervalMs, [runImmediately]
 
 	// Get the delay in milliseconds
 	lua_Integer delayMs = luaL_checkinteger(L, 1);
@@ -237,6 +237,13 @@ int lua_schedule_every(lua_State* L) {
 		luaL_error(L, "Delay must be non-negative");
 	}
 	Scheduler::DurationMs tp(delayMs);
+
+	// Get the optional runImmediately argument
+	bool runImmediately = false;
+	if (lua_gettop(L) > 2) {
+		runImmediately = lua_toboolean(L, 2);
+		lua_pop(L, 1);	// Pop the argument
+	}
 
 	// Store the function as a ref in the registry and get its reference ID
 	int funcRef = luaL_ref(L, LUA_REGISTRYINDEX);
@@ -253,7 +260,8 @@ int lua_schedule_every(lua_State* L) {
 		},
 		[L, funcRef](Scheduler::TaskId id) {
 			removee_lua_task_function(L, funcRef);
-		});
+		},
+		runImmediately);
 
 	// Return the task ID
 	lua_pushinteger(L, taskId);

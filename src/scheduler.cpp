@@ -37,6 +37,7 @@ Scheduler::TaskId Scheduler::scheduleAfter(const DurationMs& delay,
 Scheduler::TaskId Scheduler::scheduleEvery(const DurationMs& interval,
 										   const TaskFn& func,
 										   const TaskFn cleanup,
+										   bool runImmediately,
 										   bool skipIfLate) {
 	// Create the task
 	Task task;
@@ -44,7 +45,7 @@ Scheduler::TaskId Scheduler::scheduleEvery(const DurationMs& interval,
 	task.func = std::move(func);
 	task.cleanup = std::move(cleanup);
 	task.interval = interval;
-	task.nextRun = Clock::now() + interval;
+	task.nextRun = runImmediately ? Clock::now() : Clock::now() + interval;
 	task.skipIfLate = skipIfLate;
 	task.active = true;
 

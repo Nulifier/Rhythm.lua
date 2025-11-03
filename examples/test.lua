@@ -22,6 +22,10 @@ rhythm.schedule_every(2000, tick)
 rhythm.schedule_after(1000, schedule_tock)
 rhythm.schedule_after(10000, stop_loop)
 
+rhythm.schedule_every(5000, function(taskId)
+	print("Should run immediately!", taskId)
+end, true)
+
 while rhythm.loop() do end
 
 print("Ta da!")
